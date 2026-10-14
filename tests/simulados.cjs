@@ -2,9 +2,9 @@ const fs=require('fs'),vm=require('vm'),assert=require('assert'),path=require('p
 const root=path.resolve(__dirname,'..');
 const publicDir=fs.existsSync(path.join(root,'dist/index.html'))?path.join(root,'dist'):root;
 const elements=new Map(),storage=new Map();
-const el=s=>{if(!elements.has(s))elements.set(s,{innerHTML:'',value:'ingles',textContent:'',focus(){},prepend(){},showModal(){this.open=true},close(){this.open=false}});return elements.get(s)};
+const el=s=>{if(!elements.has(s))elements.set(s,{innerHTML:'',value:'ingles',textContent:'',querySelectorAll:()=>[],focus(){},prepend(){},showModal(){this.open=true},close(){this.open=false}});return elements.get(s)};
 const c=vm.createContext({document:{querySelector:el,querySelectorAll:()=>[],createElement:()=>({})},localStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v)},window:{scrollTo(){}}});
-for(const f of ['assets/data/questions.js','assets/js/app.js','assets/data/official.js','assets/js/hub.js'])vm.runInContext(fs.readFileSync(path.join(publicDir,f),'utf8'),c);
+for(const f of ['assets/data/questions.js','assets/js/app.js','assets/data/official.js','assets/js/hub.js','assets/data/questions-2024.js','assets/data/questions-2025.js','assets/js/question-figures.js','assets/js/official-text.js'])vm.runInContext(fs.readFileSync(path.join(publicDir,f),'utf8'),c);
 const run=s=>vm.runInContext(s,c),html=()=>el('#main').innerHTML;
 assert(html().includes('2024'));assert(html().includes('2025'));assert(html().includes('2026'));
 for(const year of [2024,2025]){run(`chooseYear(${year});officialState.answers=officialExams[${year}].answers.slice();officialState.answers.splice(0,5,...officialExams[${year}].languages.ingles);`);const st=run('officialStats()');assert.equal(st.right,year===2024?179:177);assert.equal(st.wrong,0);assert.equal(st.blank,0);assert.equal(st.canceled,year===2024?1:3);run('renderOfficialResults()');assert(html().includes('Correta:'));

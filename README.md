@@ -46,6 +46,10 @@ node tests/paths.cjs
 - Acertos, erros, questões em branco e resultado por área.
 - Anuladas fora da contagem e filtro para revisar os erros.
 - Explicações no simulado autoral de 2026.
+- Questões oficiais de 2024 e 2025 separadas em texto, com alternativas clicáveis e figuras.
+- Consulta à formatação original de cada questão, sem leitor de páginas embutido.
+
+Os textos ficam em `assets/data/questions-2024.js` e `questions-2025.js`. A interface está em `assets/js/official-text.js`, e `question-figures.js` carrega somente os recortes necessários para gráficos e imagens.
 
 O resultado não é uma estimativa da nota TRI. A redação está no caderno oficial e não recebe correção automática.
 

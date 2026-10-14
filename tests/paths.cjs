@@ -8,5 +8,6 @@ for(const page of ['index.html','pages/reader.html']){
     assert(fs.existsSync(path.resolve(publicDir,path.dirname(page),reference.split('?')[0])),`${page}: ${reference}`);
   }
 }
-assert(fs.readFileSync(path.join(publicDir,'assets/js/hub.js'),'utf8').includes('src="pages/reader.html?url='));
-console.log('OK: arquivos HTML, CSS, JavaScript, dados e leitor de PDF com caminhos válidos.');
+assert(!fs.readFileSync(path.join(publicDir,'assets/js/official-text.js'),'utf8').includes('<iframe'));
+for(const year of [2024,2025])assert(fs.existsSync(path.join(publicDir,`assets/data/questions-${year}.js`)));
+console.log('OK: caminhos válidos e interface oficial em texto, sem leitor de PDF embutido.');
