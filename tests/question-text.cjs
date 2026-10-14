@@ -8,4 +8,7 @@ for(const year of [2024,2025]){
     for(const q of selected){assert(q.statement.length>0,`${year}/${q.number}: enunciado vazio`);assert.equal(q.alternatives.map(a=>a.letter).join(''),'ABCDE');assert(q.alternatives.every(a=>a.text||a.visuals.length),`${year}/${q.number}: alternativa vazia`);assert(!/QUEST[Ãã]O\s+\d/.test(q.statement));for(const visual of [...q.visuals,...q.original,...q.alternatives.flatMap(a=>a.visuals)])assert(visual.box[2]>visual.box[0]&&visual.box[3]>visual.box[1]);}
   }
 }
+const first2025=c.examQuestionText[2025].find(q=>q.number===1&&q.language==='ingles');
+assert.equal(first2025.alternatives[1].text.replace(/\s+/g,' ').trim(),'descrever costumes tradicionais em celebrações indígenas.');
+assert.equal(first2025.alternatives[3].text.replace(/\s+/g,' ').trim(),'criticar a exploração indevida de elementos da identidade indígena.');
 console.log('OK: 360 questões, versões inglês/espanhol, cinco alternativas e recortes válidos.');
